@@ -266,3 +266,17 @@
         device && device.send([0x90, 69, 81]);
         device && device.send([0x90, 70, 81]);
     }
+
+/*
+deepai.setApiKey('6a5d5070-775e-463e-9d6c-8e68f313dc99');
+(async function() {
+    var resp = await deepai.callStandardApi("text2img", {
+        text: "Piano Bar",
+    });
+
+    console.log(`response: ${resp}`);
+    console.log(resp.output_url);
+    document.getElementById("wackyAI").src = resp.output_url;
+
+})()
+*/

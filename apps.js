@@ -13,12 +13,18 @@ function setNum(num) {
     } else if (num == 1 || num == "1") {
         setNumber = 1;
         sessionStorage.setItem("setNumberItem", "1");
-        console.log("Yes1");
+        //console.log("Yes1");
+    } else if (num == 2 || num == "2") {
+        setNumber = 2;
+        sessionStorage.setItem("setNumberItem", "2");
+        console.log("Yes3");
     }
     document.getElementById("pop").innerHTML = "Okey";
     document.getElementById("rate").innerHTML = "Dokey!";
+    document.getElementById("insured").innerHTML = "";
     document.getElementById("pop").removeAttribute("onClick");
     document.getElementById("rate").removeAttribute("onClick");
+    document.getElementById("insured").removeAttribute("onClick");
 }
 
 //alert("Click, stupid");
@@ -50,6 +56,30 @@ function timer() {
     }, parseInt(sessionStorage.getItem("rateOfTimer")));
 }
 
+function timer2() {
+    document.getElementById("startTimeline").removeAttribute("onClick");
+    document.getElementById("startTimeline").innerHTML = "Timeline Started!";
+    setTimeout(function(){
+        timer();
+        changeYear2();
+    }, parseInt(sessionStorage.getItem("rateOfTimer")));
+}
+
+function changeYear2(){
+    value = parseInt(sessionStorage.getItem("currYear"));
+    //let newStateChosen = "state:" + sessionStorage.getItem('stateChosen');
+    if (value < 2020) {
+        let newStateChosen = "state:" + sessionStorage.getItem('stateChosen');
+        newValue = "Current year: " + (value + 1);
+        document.getElementById("timerVal").innerHTML = newValue;
+        sessionStorage.setItem("currYear", value + 1);
+        povertyCallValue(nam, newStateChosen, "" + (value + 1));
+    } else {
+        document.getElementById("startTimeline").innerHTML = "[Previous page]";
+        document.getElementById("startTimeline").setAttribute("onClick", "prevPage();");
+    }
+}
+
 function changeYear(){
     value = parseInt(sessionStorage.getItem("currYear"));
     //let newStateChosen = "state:" + sessionStorage.getItem('stateChosen');
@@ -77,7 +107,7 @@ function prevPage() {
             type: "GET",
             // GET POST PUT DELETE
             dataType: "json",
-            url: `http://api.census.gov/data/timeseries/poverty/saipe?get=${nam}&for=${stateNum}&YEAR=${year}`,
+            url: `https://api.census.gov/data/timeseries/poverty/saipe?get=${nam}&for=${stateNum}&YEAR=${year}`,
             // url: "http://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVALL_PT,SAEPOVALL_MOE,SAEPOVRTALL_MOE,SAEPOVRTALL_PT&for=state:01&YEAR=2020",
             async: false,
             crossDomain: true,
@@ -100,7 +130,7 @@ function prevPage() {
             type: "GET",
             // GET POST PUT DELETE
             dataType: "json",
-            url: `http://api.census.gov/data/timeseries/poverty/saipe?get=${nam}&for=${state}&YEAR=${year}`,
+            url: `https://api.census.gov/data/timeseries/poverty/saipe?get=${nam}&for=${state}&YEAR=${year}`,
             // url: "http://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVALL_PT,SAEPOVALL_MOE,SAEPOVRTALL_MOE,SAEPOVRTALL_PT&for=state:01&YEAR=2020",
             async: false,
             crossDomain: true,
@@ -148,36 +178,36 @@ function prevPage() {
                         }
                     } else if (sessionStorage.getItem("setNumberItem") == "1" ||  sessionStorage.getItem("setNumberItem") == 1) {
                         console.log("Yes2");
-                        if (parseInt(data.responseJSON[1][4]) < 1) {
+                        if (parseInt(data.responseJSON[1][4]) < 5) {
                             //var audio2 = new Audio("sounds/yay.wav");
                             clearAll();
                             rageFace();
                             //audio2.play();
-                        } else if (parseInt(data.responseJSON[1][4]) >= 40) {
+                        } else if (parseInt(data.responseJSON[1][4]) >= 17.5) {
                             //var audio2 = new Audio("sounds/sadLegoSound.wav");
                             clearAll();
                             joyfullFace();
-                        } else if (parseInt(data.responseJSON[1][4]) >= 32) {
+                        } else if (parseInt(data.responseJSON[1][4]) >= 15) {
                             //var audio2 = new Audio("sounds/sadLegoSound.wav");
                             clearAll();
                             happyFace();
                             //audio2.play();
-                        } else if (parseInt(data.responseJSON[1][4]) >= 24) {
+                        } else if (parseInt(data.responseJSON[1][4]) >= 12.5) {
                             //var audio2 = new Audio("sounds/sadLegoSound.wav");
                             clearAll();
                             interestedFace();
                             //audio2.play();
-                        } else if (parseInt(data.responseJSON[1][4]) >= 16) {
+                        } else if (parseInt(data.responseJSON[1][4]) >= 10) {
                             //var audio2 = new Audio("sounds/sadLegoSound.wav");
                             clearAll();
                             neutralFace();
                             //audio2.play();
-                        } else if (parseInt(data.responseJSON[1][4]) >= 8) {
+                        } else if (parseInt(data.responseJSON[1][4]) >= 7.5) {
                             //var audio2 = new Audio("sounds/sadLegoSound.wav");
                             clearAll();
                             sadFace();
                             //audio2.play();
-                        } else if (parseInt(data.responseJSON[1][4]) >= 1) {
+                        } else if (parseInt(data.responseJSON[1][4]) >= 5) {
                             //var audio2 = new Audio("sounds/sadLegoSound.wav");
                             clearAll();
                             angryFace();
@@ -204,7 +234,41 @@ function prevPage() {
             // What to do when the call finishes
             complete: function (data) {
                 if (data.readyState === 4 && data.status === 200) {
-
+                   
+                        if (parseInt(data.responseJSON[1][0]) < 750000) {
+                            //var audio2 = new Audio("sounds/yay.wav");
+                            clearAll();
+                            rageFace();
+                            //audio2.play();
+                        } else if (parseInt(data.responseJSON[1][0]) >= 2000000) {
+                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            clearAll();
+                            joyfullFace();
+                        } else if (parseInt(data.responseJSON[1][0]) >= 1750000) {
+                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            clearAll();
+                            happyFace();
+                            //audio2.play();
+                        } else if (parseInt(data.responseJSON[1][0]) >= 1500000) {
+                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            clearAll();
+                            interestedFace();
+                            //audio2.play();
+                        } else if (parseInt(data.responseJSON[1][0]) >= 1250000) {
+                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            clearAll();
+                            neutralFace();
+                            //audio2.play();
+                        } else if (parseInt(data.responseJSON[1][0]) >= 1000000) {
+                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            clearAll();
+                            sadFace();
+                            //audio2.play();
+                        } else if (parseInt(data.responseJSON[1][0]) >= 750000) {
+                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            clearAll();
+                            angryFace();
+                        }
                 } else {
                     //console.log("WHAT?!");
                 }
@@ -421,16 +485,4 @@ function audiopause() {
 }
 
 console.log(window);
-/*
-deepai.setApiKey('6a5d5070-775e-463e-9d6c-8e68f313dc99');
-(async function() {
-    var resp = await deepai.callStandardApi("text2img", {
-        text: "Piano Bar",
-    });
 
-    console.log(`response: ${resp}`);
-    console.log(resp.output_url);
-    document.getElementById("wackyAI").src = resp.output_url;
-
-})()
-*/
