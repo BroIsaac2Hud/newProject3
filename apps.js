@@ -108,7 +108,6 @@ function prevPage() {
             // GET POST PUT DELETE
             dataType: "json",
             url: `https://api.census.gov/data/timeseries/poverty/saipe?get=${nam}&for=${stateNum}&YEAR=${year}`,
-            // url: "http://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVALL_PT,SAEPOVALL_MOE,SAEPOVRTALL_MOE,SAEPOVRTALL_PT&for=state:01&YEAR=2020",
             async: false,
             crossDomain: true,
 
@@ -131,7 +130,6 @@ function prevPage() {
             // GET POST PUT DELETE
             dataType: "json",
             url: `https://api.census.gov/data/timeseries/poverty/saipe?get=${nam}&for=${state}&YEAR=${year}`,
-            // url: "http://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVALL_PT,SAEPOVALL_MOE,SAEPOVRTALL_MOE,SAEPOVRTALL_PT&for=state:01&YEAR=2020",
             async: false,
             crossDomain: true,
 
@@ -435,7 +433,6 @@ function dontUseMe() {
         // GET POST PUT DELETE
         dataType: "json",
         url: `https://serpapi.com/search.json?q=${search}&tbm=isch&ijn=0&api_key=${api_key}`,
-        // url: "http://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVALL_PT,SAEPOVALL_MOE,SAEPOVRTALL_MOE,SAEPOVRTALL_PT&for=state:01&YEAR=2020",
         async: false,
         crossDomain: true,
         //headers: { 'Access-Control-Allow-Origin: '},
