@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project3</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="javascript.js"></script>
+
+</head>
+<body class = "backgroundColor" >
+   </body>
+</html>
+
+<script>
+    // Openweathermapapi
+    // lat = 41.8781;
+    // long = -87.6298;
+    // 30d17d39a0b0c66e3553ed1942e9a41f
+
+    povertyCallValue();
+
+    function povertyCallValue() {
+        name = "NAME,SAEPOVALL_PT,SAEPOVALL_MOE,SAEPOVRTALL_MOE,SAEPOVRTALL_PT";
+        state = "state:01";
+        year = "2020";
+
+        $.ajax({
+            // CALL SETTINGS & PARAMS
+            type: "GET",
+            // GET POST PUT DELETE
+            dataType: "json",
+            url: `http://api.census.gov/data/timeseries/poverty/saipe?get=${name}&for=${state}&YEAR=${year}`,
+            // url: "http://api.census.gov/data/timeseries/poverty/saipe?get=NAME,SAEPOVALL_PT,SAEPOVALL_MOE,SAEPOVRTALL_MOE,SAEPOVRTALL_PT&for=state:01&YEAR=2020",
+            async: false,
+            crossDomain: true,
+
+            // What to do when the call finishes
+            complete: function (data) {
+                if (data.readyState === 4 && data.status === 200) {
+                    console.log(data);
+                }
+            }
+        });
+    }
+
+    // apiCallValue();
+    function apiCallValue() {
+        lat = "39.7392";
+        long = "-104.9903";
+        API_key = "30d17d39a0b0c66e3553ed1942e9a41f";
+        units = "imperial";
+
+        $.ajax({
+            // CALL SETTINGS & PARAMS
+            type: "GET",
+            // GET POST PUT DELETE
+            dataType: "json",
+            url: `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${API_key}&units=${units}`,
+            async: false,
+            crossDomain: true,
+
+            // What to do when the call finishes
+            complete: function (data) {
+                if (data.readyState === 4 && data.status === 200) {
+                    console.log(data);
+
+                    temp = data.responseJSON.main.temp;
+                    desc = data.responseJSON.weather[0].description;
+                    //main = data.responseJSON.weather[0].main;
+                    feels_like = data.responseJSON.main.feels_like;
+                    country = data.responseJSON.sys.country;
+                    city = data.responseJSON.name;
+
+                    console.log("Temp:");
+                    console.log(temp);
+                    console.log("Desc:");
+                    console.log(desc);
+                    //console.log("Weather Main:");
+                    //console.log(main);
+                    console.log("Feels Like:");
+                    console.log(feels_like);
+                    console.log("Country:");
+                    console.log(country);
+                    console.log("City:");
+                    console.log(city);
+                }
+            }
+        });
+    }
+
+    function getValue() {
+        $.ajax({
+            // CALL SETTINGS & PARAMS
+            type: "GET",
+            // GET POST PUT DELETE
+            dataType: "json",
+            url: "http://api.open-notify.org/iss-now.json",
+            //url: "https://covid-193.p.rapidapi.com/countries",
+            async: false,
+            crossDomain: true,
+
+            // What to do when the call finishes
+            complete: function (data) {
+                if (data.readyState === 4 && data.status === 200) {
+                    console.log(data);
+                    // ISOLATE THE INFO YOU'RE LOOKING FOR
+                    // Lat = data.responseJSON.iss_position.latitude;
+                    // Long = data.responseJSON.iss_position.longitude;
+
+                    //Result = data.responseJSON.iss_position.results;
+
+                    // document.querySelector(".backgroundColor").style.backgroundColor
+                    // console.log(Lat);
+                    //console.log(Result);
+                    // console.log(Long);
+                }
+            }
+        });
+    }
+
+    function fakeData() {
+        $.ajax({
+            url: 'https://randomuser.me/api/',
+            dataType: 'json',
+            success: function(data) {
+                console.log(data);
+            }
+        });
+    }
+
+    function smashChar() {
+        $.ajax({
+            type: "GET",
+            url: 'http://smashlounge.com/api/groups/all',
+            dataType: 'json',
+            async: false,
+            crossDomain: false,
+
+            success: function(data) {
+                console.log(data);
+            }
+        });
+    }
+
+    function pinball() {
+        $.ajax({
+            type: "GET",
+            url: '/api/v1/region/:region/events.json',
+            dataType: 'json',
+            async: false,
+            crossDomain: true,
+
+            success: function(data) {
+                console.log(data);
+            }
+        });
+    }
+
+    function pcGames() {
+        $.ajax({
+            type: "GET",
+            url: 'https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15',
+            dataType: 'json',
+            async: false,
+            crossDomain: true,
+
+            success: function(data) {
+                console.log(data);
+            }
+        });
+    }
+
+    //pinball();
+    //fakeData();
+    //smashChar();
+    // pcGames();
+
+
+</script>

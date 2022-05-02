@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poverty Statistics</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./apps.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body class = "backgroundColor">
+    <h1 id = "testelm">"Numbers, please!"</h1>
+    <h3 class = "inputText" id = "startTimeline" onclick = "timer();">[Start Timeline]</h3>
+    <h2 id = "StateVal"> State chosen:  </h2>
+    <h2 id = "timerVal"> Current year: 1995 </h2>
+    <!--<img src = "https://loremflickr.com/800/600/Pizza"></img> --> 
+</body>
+</html>
+<script>
+    console.log(window);
+    console.log(sessionStorage.getItem("stateChosen"));
+    sessionStorage.setItem("currYear", "1994");
+    numState = sessionStorage.getItem('stateChosen');
+    getState(numState);
+    document.getElementById("StateVal").innerHTML = "State chosen: " + sessionStorage.getItem("stateName");
+    
+        //setUpPovertyTimeline(sessionStorage.getItem("stateChosen"));
+    
+</script>

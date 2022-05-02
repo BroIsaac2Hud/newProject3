@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launch Pad McQuack</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./apps.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <!-- <script src="https://cdnjs.deepai.org/deepai.min.js"></script> -->
+</head>
+
+<body class = "backgroundColor" >
+    
+    <h1 id = "testelm">Playing with Poverty</h1>
+    <h3> Enter 2-digit state FIPS codes here: <input type = "text" id = "text"> </h3>
+    <h2 id = "number">
+        <a class = "pop" id = "pop" onclick = "setNum('0');"> [Total in Poverty]</a>
+        <a class = "rate" id = "rate" onclick = "setNum('1');"> [Poverty Rate]</a> 
+    </h2>
+    <!--<img src = "https://loremflickr.com/800/600/Pizza"></img> --> 
+</body>
+</html>
+
+<script>
+    sessionStorage.setItem("setNumberItem", "0");
+    input = document.getElementById("text");
+    //input2 = document.getElementById("text2");
+    
+    window.addEventListener("keypress", (event)=> {
+        if (event.keyCode === 13) {
+            //console.log("OK");
+            event.preventDefault();
+            value = document.getElementById("text").value;
+            //value2 = document.getElementById("text2").value;
+            
+        if (parseInt(value) <= 56 && parseInt(value) >= 1 && parseInt(value) != 3 &&
+         parseInt(value) != 7 && parseInt(value) != 11 && parseInt(value) != 14 &&
+         parseInt(value) != 43 && parseInt(value) != 52) {
+            //sessionStorage.setItem("yearChosen", value);
+            sessionStorage.setItem("stateChosen", value);
+            window.location.href = "povertyDisplay.html";
+        } else {
+            document.getElementById("testelm").innerHTML = "Sorry, incorrect input";
+        }
+    }
+    });
+
+</script>
+
+<style>
+    h2 {
+        margin-left: 30%;
+    }
+</style>
