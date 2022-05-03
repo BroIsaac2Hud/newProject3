@@ -19,66 +19,54 @@ function setNum(num) {
         sessionStorage.setItem("setNumberItem", "2");
         console.log("Yes3");
     }
-    document.getElementById("pop").innerHTML = "Okey";
-    document.getElementById("rate").innerHTML = "Dokey!";
-    document.getElementById("insured").innerHTML = "";
+    document.getElementById("number").style.marginLeft = "42%";
+    document.getElementById("pop").innerHTML = "*";
+    document.getElementById("rate").innerHTML = "U";
+    document.getElementById("insured").innerHTML = "*";
     document.getElementById("pop").removeAttribute("onClick");
     document.getElementById("rate").removeAttribute("onClick");
     document.getElementById("insured").removeAttribute("onClick");
 }
 
-//alert("Click, stupid");
-//dontUseMe();
+
 sessionStorage.setItem("rateOfTimer", "1000");
 
 let audio = new Audio("sounds/burp.wav");
-
-function setUpPovertyTimeline() {
-
-    //navigator.requestMIDIAccess().then(success, failure);
-    //document.getElementById("startTimeline").removeAttribute("onClick");
-    let newStateChosen = "state:" + sessionStorage.getItem('stateChosen');
-    let i = 1995;
-    while(i <= 2019) {
-        //povertyCallValue(nam, newStateChosen, "" + i);
-        setTimeout(function(){ povertyCallValue(nam, newStateChosen, "" + i); }, parseInt(sessionStorage.getItem("rateOfTimer")));
-        i++;
-    }
-}
 
 
 function timer() {
     document.getElementById("startTimeline").removeAttribute("onClick");
     document.getElementById("startTimeline").innerHTML = "Timeline Started!";
-    setTimeout(function(){
-        timer();
-        changeYear();
-    }, parseInt(sessionStorage.getItem("rateOfTimer")));
-}
-
-function timer2() {
-    document.getElementById("startTimeline").removeAttribute("onClick");
-    document.getElementById("startTimeline").innerHTML = "Timeline Started!";
-    setTimeout(function(){
-        timer();
-        changeYear2();
-    }, parseInt(sessionStorage.getItem("rateOfTimer")));
+    if (sessionStorage.getItem("setNumberItem") == 0 || sessionStorage.getItem("setNumberItem") == "0" ||
+    sessionStorage.getItem("setNumberItem") == 1 || sessionStorage.getItem("setNumberItem") == "1") {
+        setTimeout(function(){
+            timer();
+            changeYear();
+        }, parseInt(sessionStorage.getItem("rateOfTimer")));
+    } else {
+        setTimeout(function(){
+            timer();
+            changeYear2();
+        }, parseInt(sessionStorage.getItem("rateOfTimer")));
+    }
 }
 
 function changeYear2(){
     value = parseInt(sessionStorage.getItem("currYear"));
     //let newStateChosen = "state:" + sessionStorage.getItem('stateChosen');
-    if (value < 2020) {
+    if (value < 2017) {
         let newStateChosen = "state:" + sessionStorage.getItem('stateChosen');
         newValue = "Current year: " + (value + 1);
         document.getElementById("timerVal").innerHTML = newValue;
         sessionStorage.setItem("currYear", value + 1);
-        povertyCallValue(nam, newStateChosen, "" + (value + 1));
+        healthInsuranceCallValue(nam2, newStateChosen, "" + (value + 1));
     } else {
+        secretMessage2();
         document.getElementById("startTimeline").innerHTML = "[Previous page]";
         document.getElementById("startTimeline").setAttribute("onClick", "prevPage();");
     }
 }
+
 
 function changeYear(){
     value = parseInt(sessionStorage.getItem("currYear"));
@@ -90,15 +78,46 @@ function changeYear(){
         sessionStorage.setItem("currYear", value + 1);
         povertyCallValue(nam, newStateChosen, "" + (value + 1));
     } else {
+        secretMessage1();
         document.getElementById("startTimeline").innerHTML = "[Previous page]";
         document.getElementById("startTimeline").setAttribute("onClick", "prevPage();");
     }
 }
 
 function prevPage() {
-    window.location.href = "index.html";
+    sessionStorage.setItem("setNumberItem", "0");
+    window.location.href = "options.html";
 }
 
+function enragedOrJoyful(status) {
+    if (status == "enraged") {
+        sessionStorage.setItem("EStatus", "enraged");
+    } else if (status == "joyful") {
+        sessionStorage.setItem("EStatus", "joyful");
+    } else {
+        sessionStorage.setItem("EStatus", "default");
+    }
+}
+
+function secretMessage1() {
+    if (sessionStorage.getItem("EStatus") == "enraged") {
+        document.getElementById("secretMessage").style.color = "purple";
+        document.getElementById("secretMessage").innerHTML = "TOO SMALL! THIS MUST BE A BIGGER NUMBER. NOW NUKING STOCK MARKET.";
+    } else if (sessionStorage.getItem("EStatus") == "joyful") {
+        document.getElementById("secretMessage").style.color = "lightBlue";
+        document.getElementById("secretMessage").innerHTML = "01101001 00100000 01101100 01101111 01110110 01100101 00100000 01111001 01101111 01110101";
+    }
+}
+
+function secretMessage2() {
+    if (sessionStorage.getItem("EStatus") == "enraged") {
+        document.getElementById("secretMessage").style.color = "purple";
+        document.getElementById("secretMessage").innerHTML = "TOO SMALL! THIS MUST BE A BIGGER NUMBER. NOW DEPLOYING HEALTHCARE PACKAGES ACROSS THE US.";
+    } else if (sessionStorage.getItem("EStatus") == "joyful") {
+        document.getElementById("secretMessage").style.color = "lightBlue";
+        document.getElementById("secretMessage").innerHTML = "YAY!";
+    }
+}
 
     function getState(stateNum) {
         stateNum = "state:" + stateNum;
@@ -122,6 +141,13 @@ function prevPage() {
         });
     }
 
+    function changeTextColor(colorChosen) {
+        document.getElementById("testelm").style.color = colorChosen;
+        document.getElementById("startTimeline").style.color = colorChosen;
+        document.getElementById("StateVal").style.color = colorChosen;
+        document.getElementById("timerVal").style.color = colorChosen;
+    }
+
 // povertyCallValue(nam, state, year);
     function povertyCallValue(nam, state, year) {
         $.ajax({
@@ -142,79 +168,90 @@ function prevPage() {
                     if (sessionStorage.getItem("setNumberItem") == "0" ||  sessionStorage.getItem("setNumberItem") == 0) {
                         if (parseInt(data.responseJSON[1][1]) < 750000) {
                             //var audio2 = new Audio("sounds/yay.wav");
+                            changeTextColor("purple");
                             clearAll();
                             rageFace();
+                            enragedOrJoyful("enraged");
                             //audio2.play();
                         } else if (parseInt(data.responseJSON[1][1]) >= 2000000) {
+                            changeTextColor("lightBlue");
                             //var audio2 = new Audio("sounds/sadLegoSound.wav");
                             clearAll();
                             joyfullFace();
+                            enragedOrJoyful("joyful")
                         } else if (parseInt(data.responseJSON[1][1]) >= 1750000) {
-                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            changeTextColor("green");
                             clearAll();
                             happyFace();
+                            enragedOrJoyful("default");
                             //audio2.play();
                         } else if (parseInt(data.responseJSON[1][1]) >= 1500000) {
                             //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            changeTextColor("lightGreen");
                             clearAll();
                             interestedFace();
+                            enragedOrJoyful("default");
                             //audio2.play();
                         } else if (parseInt(data.responseJSON[1][1]) >= 1250000) {
                             //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            changeTextColor("yellow");
                             clearAll();
                             neutralFace();
+                            enragedOrJoyful("default");
                             //audio2.play();
                         } else if (parseInt(data.responseJSON[1][1]) >= 1000000) {
                             //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            changeTextColor("orange");
                             clearAll();
                             sadFace();
+                            enragedOrJoyful("default");
                             //audio2.play();
                         } else if (parseInt(data.responseJSON[1][1]) >= 750000) {
                             //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            changeTextColor("red");
                             clearAll();
                             angryFace();
+                            enragedOrJoyful("default");
                         }
                     } else if (sessionStorage.getItem("setNumberItem") == "1" ||  sessionStorage.getItem("setNumberItem") == 1) {
-                        console.log("Yes2");
                         if (parseInt(data.responseJSON[1][4]) < 5) {
-                            //var audio2 = new Audio("sounds/yay.wav");
+                            changeTextColor("purple");
                             clearAll();
                             rageFace();
-                            //audio2.play();
+                            enragedOrJoyful("enraged");
                         } else if (parseInt(data.responseJSON[1][4]) >= 17.5) {
-                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            changeTextColor("lightBlue");
                             clearAll();
                             joyfullFace();
+                            enragedOrJoyful("joyful");
                         } else if (parseInt(data.responseJSON[1][4]) >= 15) {
-                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            changeTextColor("green");
                             clearAll();
                             happyFace();
-                            //audio2.play();
+                            enragedOrJoyful("default");
                         } else if (parseInt(data.responseJSON[1][4]) >= 12.5) {
-                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            changeTextColor("lightGreen");
                             clearAll();
                             interestedFace();
-                            //audio2.play();
+                            enragedOrJoyful("default");
                         } else if (parseInt(data.responseJSON[1][4]) >= 10) {
-                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            changeTextColor("yellow");
                             clearAll();
                             neutralFace();
-                            //audio2.play();
+                            enragedOrJoyful("default");
                         } else if (parseInt(data.responseJSON[1][4]) >= 7.5) {
-                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            changeTextColor("orange");
                             clearAll();
                             sadFace();
-                            //audio2.play();
+                            enragedOrJoyful("default");
                         } else if (parseInt(data.responseJSON[1][4]) >= 5) {
-                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            changeTextColor("red");
                             clearAll();
                             angryFace();
+                            enragedOrJoyful("default");
                         }
                     }
-                } else {
-                    //console.log("WHAT?!");
                 }
-                
             }
         });
     }
@@ -232,52 +269,50 @@ function prevPage() {
             // What to do when the call finishes
             complete: function (data) {
                 if (data.readyState === 4 && data.status === 200) {
-                   
-                        if (parseInt(data.responseJSON[1][0]) < 750000) {
-                            //var audio2 = new Audio("sounds/yay.wav");
+                    console.log(data);
+                        if (parseInt(data.responseJSON[1][0]) < 5000000) {
+                            changeTextColor("purple");
                             clearAll();
                             rageFace();
-                            //audio2.play();
-                        } else if (parseInt(data.responseJSON[1][0]) >= 2000000) {
-                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            enragedOrJoyful("enraged");
+                        } else if (parseInt(data.responseJSON[1][0]) >= 30000000) {
+                            changeTextColor("lightBlue");
                             clearAll();
                             joyfullFace();
-                        } else if (parseInt(data.responseJSON[1][0]) >= 1750000) {
-                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            enragedOrJoyful("joyful");
+                        } else if (parseInt(data.responseJSON[1][0]) >= 25000000) {
+                            changeTextColor("green");
                             clearAll();
                             happyFace();
-                            //audio2.play();
-                        } else if (parseInt(data.responseJSON[1][0]) >= 1500000) {
-                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            enragedOrJoyful("default");
+                        } else if (parseInt(data.responseJSON[1][0]) >= 20000000) {
+                            changeTextColor("lightGreen");
                             clearAll();
                             interestedFace();
-                            //audio2.play();
-                        } else if (parseInt(data.responseJSON[1][0]) >= 1250000) {
-                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            enragedOrJoyful("default");
+                        } else if (parseInt(data.responseJSON[1][0]) >= 15000000) {
+                            changeTextColor("yellow");
                             clearAll();
                             neutralFace();
-                            //audio2.play();
-                        } else if (parseInt(data.responseJSON[1][0]) >= 1000000) {
-                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            enragedOrJoyful("default");
+                        } else if (parseInt(data.responseJSON[1][0]) >= 10000000) {
+                            changeTextColor("orange");
                             clearAll();
                             sadFace();
-                            //audio2.play();
-                        } else if (parseInt(data.responseJSON[1][0]) >= 750000) {
-                            //var audio2 = new Audio("sounds/sadLegoSound.wav");
+                            enragedOrJoyful("default");
+                        } else if (parseInt(data.responseJSON[1][0]) >= 5000000) {
+                            changeTextColor("red");
                             clearAll();
                             angryFace();
+                            enragedOrJoyful("default");
                         }
-                } else {
-                    //console.log("WHAT?!");
                 }
-                
             }
         });
     }
 
 if (navigator.requestMIDIAccess) {
     navigator.requestMIDIAccess().then(success, failure);
-    //console.log("navigator");
 }
 
 function failure() {
@@ -287,7 +322,6 @@ function failure() {
 
 function updateDevices(event) {
     //console.log(event);
-    //console.log("event occurred");
 }
 
 
@@ -366,12 +400,6 @@ function noteOn(note) {
         //b = 5;
         clearAll();
         happyFace();
-        //document.getElementById('testelm').style.backgroundColor = `rgba(0,0,${b},1)`;
-        /*
-        state = "state:0" + Math.round(p5_.map(note, 36, 99, 1, 50));
-        year = "" + Math.round(p5_.map(note, 36, 99, 1995, 2020));
-        povertyCallValue(nam, state, year);
-        */
     }
 
     if (note == 38) {
@@ -424,34 +452,6 @@ function noteOn(note) {
     }
 }
 
-function dontUseMe() {
-    api_key = "fe6599f6f2371b8644e7ccd6ee4d211259986d884f4867135c5af7e061c061ec";
-    search = "Fries";
-    $.ajax({
-        // CALL SETTINGS & PARAMS
-        type: "GET",
-        // GET POST PUT DELETE
-        dataType: "json",
-        url: `https://serpapi.com/search.json?q=${search}&tbm=isch&ijn=0&api_key=${api_key}`,
-        async: false,
-        crossDomain: true,
-        //headers: { 'Access-Control-Allow-Origin: '},
-
-        // What to do when the call finishes
-        complete: function (data) {
-            if (data.readyState === 4 && data.status === 200) {
-                console.log(data);
-            }
-            
-            if (Integer.parseInt(data.responseJSON.Array(1).Array(1)) < 10000) {
-                var audio2 = new Audio(sounds/yay.wav);
-                audio2.play();
-            }
-            
-        }
-    })
-
-}
 
 function noteOff(note) {
     console.log(`note:${note} //off`);

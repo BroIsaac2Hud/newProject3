@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Launch Pad McQuack</title>
+    <title>Introduction</title>
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="./apps.js"></script>
@@ -13,48 +13,42 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <!-- <script src="https://cdnjs.deepai.org/deepai.min.js"></script> -->
 </head>
-
-<body class = "backgroundColor" >
+<body>
     
-    <h1 id = "testelm">Playing with Poverty</h1>
-    <h3> Enter 2-digit state FIPS codes here: <input type = "text" id = "text"> </h3>
-    <h2 id = "number">
-        <a class = "pop" id = "pop" onclick = "setNum('0');"> [Total in Poverty]</a>
-        <a class = "rate" id = "rate" onclick = "setNum('1');"> [Poverty Rate]</a> 
-        <a class = "insured" id = "insured" onclick = "setNum('2');"> [Total with Health Insurance]</a> 
+    <h1>HELLO, I'M NUMBO. I LOVE BIG NUMBERS AND BIG RATIOS! GIVE ME BIG NUMBERS AND RATIOS, PLEASE!</h1>
+    <h2 id = "well" onclick = "prevPage()"> 
+        <a>[OK]</a>
+        <a>[Sure!]</a>
+        <a>[Of course]</a>
+        <a>[Alright.]</a>
     </h2>
-    <!--<img src = "https://loremflickr.com/800/600/Pizza"></img> --> 
+    <img id = "numbo" class = "numbo" src = "numbo.jpg"></img>
+    <img src = "todoList.png"></img>
 </body>
 </html>
 
-<script>
-    sessionStorage.setItem("setNumberItem", "0");
-    input = document.getElementById("text");
-    //input2 = document.getElementById("text2");
-    
-    window.addEventListener("keypress", (event)=> {
-        if (event.keyCode === 13) {
-            //console.log("OK");
-            event.preventDefault();
-            value = document.getElementById("text").value;
-            //value2 = document.getElementById("text2").value;
-            
-        if (parseInt(value) <= 56 && parseInt(value) >= 1 && parseInt(value) != 3 &&
-         parseInt(value) != 7 && parseInt(value) != 11 && parseInt(value) != 14 &&
-         parseInt(value) != 43 && parseInt(value) != 52) {
-            //sessionStorage.setItem("yearChosen", value);
-            sessionStorage.setItem("stateChosen", value);
-            window.location.href = "povertyDisplay.html";
-        } else {
-            document.getElementById("testelm").innerHTML = "Sorry, incorrect input";
-        }
-    }
-    });
-
-</script>
-
 <style>
-    h2 {
-        margin-left: 30%;
+    h1{
+        margin-left: 4%;
     }
+    a {
+        margin-left: 10%;
+    }
+    body{
+        margin-bottom: 1%;
+    }
+    img{
+        margin-top:29%;
+
+    }
+    img.numbo{
+        max-width:5%;
+        max-height:5%;
+    }
+
 </style>
+
+<script>
+    clearAll();
+    happyFace();
+</script>
